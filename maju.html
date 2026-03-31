@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Amor em Rosa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --text-3xl: clamp(2.5rem, 1rem + 4vw, 5rem);
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+
+      --radius-sm: 0.5rem;
+      --radius-md: 1rem;
+      --radius-lg: 1.5rem;
+      --radius-xl: 2rem;
+      --radius-full: 999px;
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Nunito', system-ui, sans-serif;
+
+      --bg: #fff6fb;
+      --surface: rgba(255,255,255,0.72);
+      --surface-2: rgba(255,240,248,0.92);
+      --surface-3: rgba(255,227,240,0.92);
+      --text: #5b2142;
+      --muted: #8f5270;
+      --primary: #ff5fa2;
+      --primary-2: #ff8fc2;
+      --primary-3: #ffd4e6;
+      --line: rgba(184, 88, 132, 0.18);
+      --shadow: 0 12px 40px rgba(255, 105, 160, 0.18);
+      --shadow-soft: 0 8px 24px rgba(221, 117, 159, 0.14);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 20%, rgba(255, 173, 209, 0.35), transparent 22%),
+        radial-gradient(circle at 90% 10%, rgba(255, 125, 181, 0.22), transparent 20%),
+        radial-gradient(circle at 80% 80%, rgba(255, 191, 219, 0.28), transparent 24%),
+        linear-gradient(135deg, #fff8fc 0%, #ffeaf3 50%, #fff4f8 100%);
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    button { font: inherit; border: none; cursor: pointer; }
+
+    .hearts {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -60px;
+      color: rgba(255, 95, 162, 0.28);
+      font-size: 20px;
+      animation: floatUp linear infinite;
+      filter: blur(0.2px);
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-115vh) scale(1.5) rotate(35deg); opacity: 0; }
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: var(--space-8) 0 var(--space-16);
+    }
+
+    .hero {
+      display: grid;
+      gap: var(--space-8);
+      align-items: center;
+      min-height: 100vh;
+      padding: var(--space-8) 0;
+    }
+
+    .hero-card,
+    .message-card,
+    .carousel-shell,
+    .footer-love {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: var(--radius-xl);
+    }
+
+    .hero-card {
+      padding: clamp(1.5rem, 3vw, 3rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.7), rgba(255,255,255,0));
+      pointer-events: none;
+    }
+
+    .hero-card::before {
+      width: 240px;
+      height: 240px;
+      top: -80px;
+      right: -40px;
+    }
+
+    .hero-card::after {
+      width: 180px;
+      height: 180px;
+      bottom: -50px;
+      left: -40px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, rgba(255,95,162,0.16), rgba(255,143,194,0.22));
+      border: 1px solid rgba(255,95,162,0.18);
+      color: var(--text);
+      font-size: var(--text-sm);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: var(--space-5);
+      width: fit-content;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      line-height: 0.95;
+      margin-bottom: var(--space-4);
+      color: #7a214f;
+    }
+
+    .hero p {
+      font-size: var(--text-lg);
+      color: var(--muted);
+      max-width: 34ch;
+    }
+
+    .hero-quote {
+      margin-top: var(--space-6);
+      padding: var(--space-4) var(--space-5);
+      border-left: 4px solid var(--primary);
+      background: rgba(255,255,255,0.5);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      color: #7c3f5d;
+      font-weight: 700;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .actions {
+      margin-top: var(--space-6);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .btn {
+      min-height: 48px;
+      padding: 0.9rem 1.25rem;
+      border-radius: var(--radius-full);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      font-weight: 800;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white;
+      box-shadow: 0 12px 28px rgba(255, 95, 162, 0.34);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.8);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .section {
+      padding: var(--space-10) 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--space-6);
+    }
+
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      color: #8d2258;
+      margin-bottom: var(--space-2);
+    }
+
+    .section-title p {
+      color: var(--muted);
+      max-width: 48ch;
+      margin: 0 auto;
+    }
+
+    .messages {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+    }
+
+    .message-card {
+      padding: var(--space-6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .message-card::after {
+      content: '♥';
+      position: absolute;
+      right: 18px;
+      bottom: 10px;
+      font-size: 58px;
+      color: rgba(255,95,162,0.10);
+      font-family: serif;
+    }
+
+    .message-card h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-3);
+      color: #912659;
+    }
+
+    .message-card p {
+      color: #7d4d67;
+      line-height: 1.7;
+    }
+
+    .carousel-shell {
+      padding: var(--space-5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel {
+      position: relative;
+      border-radius: calc(var(--radius-xl) - var(--space-3));
+      overflow: hidden;
+      min-height: 680px;
+      background: var(--surface-2);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45);
+    }
+
+    .slides {
+      display: flex;
+      height: 100%;
+      transition: transform .7s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .slide {
+      min-width: 100%;
+      position: relative;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.02));
+    }
+
+    .slide img {
+      width: 100%;
+      height: 680px;
+      object-fit: cover;
+    }
+
+    .slide-overlay {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: var(--space-8) var(--space-6) var(--space-6);
+      background: linear-gradient(180deg, transparent, rgba(84, 23, 52, 0.75));
+      color: white;
+    }
+
+    .slide-overlay h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .slide-overlay p {
+      max-width: 42ch;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.75);
+      color: #8d2258;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-soft);
+      z-index: 3;
+      font-size: 1.5rem;
+    }
+
+    .nav-btn:hover { background: white; }
+    .prev { left: 16px; }
+    .next { right: 16px; }
+
+    .dots {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 4;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(10px);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.56);
+      border: 2px solid transparent;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .dot.active {
+      background: #ff9cc8;
+      transform: scale(1.18);
+      border-color: white;
+    }
+
+    .love-line {
+      margin-top: var(--space-8);
+      text-align: center;
+      color: #9d5879;
+      font-size: var(--text-lg);
+      font-weight: 700;
+    }
+
+    .footer-love {
+      margin-top: var(--space-10);
+      padding: var(--space-8);
+      text-align: center;
+    }
+
+    .footer-love h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      color: #93275c;
+      margin-bottom: var(--space-3);
+    }
+
+    .footer-love p {
+      color: var(--muted);
+      max-width: 48ch;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .signature {
+      margin-top: var(--space-5);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    @media (max-width: 900px) {
+      .messages { grid-template-columns: 1fr; }
+      .carousel { min-height: 520px; }
+      .slide img { height: 520px; }
+      .hero { min-height: auto; }
+    }
+
+    @media (max-width: 640px) {
+      .wrapper { width: min(100% - 20px, 1120px); }
+      .hero-card, .message-card, .carousel-shell, .footer-love { border-radius: 1.5rem; }
+      .hero p { max-width: 100%; }
+      .actions { flex-direction: column; }
+      .btn { width: 100%; }
+      .carousel { min-height: 420px; }
+      .slide img { height: 420px; }
+      .slide-overlay { padding: var(--space-6) var(--space-4) var(--space-5); }
+      .nav-btn { width: 44px; height: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" aria-hidden="true" id="hearts"></div>
+
+  <main class="wrapper">
+    <section class="hero" id="inicio">
+      <div class="hero-card">
+        <div class="badge">💗 Um cantinho feito com carinho pra uma querida (IH COM LAÇINHOS KDSAKDSAK) 🎀🎀🎀🎀🎀🎀</div>
+        <h1>Você deixa tudo mais bonito, mais leve e mais roSA</h1>
+        <p>
+          Fiz esse pequeno presente, foi oque acabei conseguindo fzr, mas é bem especial
+        </p>
+
+        <div class="hero-quote">
+          “É dia de celebrar a pessoa incrível que você é, com muita alegria (FOI MAL TO ATRASADO dksakdsakd)”
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">Ver fotos ✨</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('mensagens').scrollIntoView({behavior:'smooth'})">Ler homenagens 🎉</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mensagens">
+      <div class="section-title">
+        <h2>Mensagens de aniversário</h2>
+        <p>Cada frase aqui foi pensada para deixar o seu dia ainda mais feliz, especial e cheio de boas energias.</p>
+      </div>
+
+      <div class="messages">
+        <article class="message-card">
+          <h3>Seu dia especial</h3>
+          <p>é o seu momento de sorrir ainda mais, receber todo o carinho do mundo e aproveitar cada instante de um dia feito para celebrar a sua vida.</p>
+        </article>
+
+        <article class="message-card">
+          <h3>Amizade de verdade</h3>
+          <p>Ter sua amizade é muito especial, porque você é uma pessoa leve, divertida e daquelas que deixam qualquer momento melhor só por estar presente.</p>
+        </article>
+
+        <article class="message-card">
+          <h3>Muitas coisas boas</h3>
+          <p>Que este novo ciclo venha cheio de felicidade, saúde, conquistas, paz e muitos motivos para comemorar, porque você merece tudo de melhor.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="galeria">
+      <div class="section-title">
+        <h2>Momentos especiais</h2>
+        <p>Um cantinho em tons de rosa para reunir fotos incríveis e deixar esta homenagem de aniversário ainda mais bonita.</p>
+      </div>
+
+      <div class="carousel-shell">
+        <div class="carousel">
+          <button class="nav-btn prev" aria-label="Imagem anterior">❮</button>
+          <div class="slides" id="slides">
+            <figure class="slide">
+              <img src="./majudoida.png" alt="Selfie no espelho com celular rosa e look preto" loading="lazy" width="1080" height="1350">
+              <figcaption class="slide-overlay">
+                <h3>KDJSAKDAJKDJSAKDJSAKDJSAKDJSKADJSAKD</h3>
+                <p>tudo de ruim no teu dia tchau</p>
+              </figcaption>
+            </figure>
+
+            <figure class="slide">
+              <img src="./maju1.png" alt="Retrato com look preto e colar em ambiente com espelho" loading="lazy" width="1080" height="1350">
+              <figcaption class="slide-overlay">
+                <h3>BRINCADEIRAAAAA</h3>
+                <p>Uma foto linda para representar alguém que merece um aniversário cheio de alegria, carinho e momentos inesquecíveis.</p>
+              </figcaption>
+            </figure>
+
+            <figure class="slide">
+              <img src="./maju2.png" alt="Sorriso com óculos redondos e colar em ambiente de festa" loading="lazy" width="150" height="150">
+              <figcaption class="slide-overlay">
+                <h3>Sorriso de uma pessoa especial DKSAKDSA</h3>
+                <p>Que nunca faltem motivos para sorrir, comemorar e aproveitar tudo de bom que a vida ainda está preparando para vc</p>
+              </figcaption>
+            </figure>
+
+            <figure class="slide">
+              <img src="./maju4.png" alt="Foto sentada com vestido rosa estampado em ambiente colorido" loading="lazy" width="1080" height="1350">
+              <figcaption class="slide-overlay">
+                <h3>Cheia de alegria (essa ft te define)</h3>
+                <p>Seu aniversário merece toda essa energia bonita, colorida e especial (da mesma forma q vc contagia todos ao seu redor), do jeitinho alegre que combina com você.</p>
+              </figcaption>
+            </figure>
+
+            <figure class="slide">
+              <img src="./maju5.png" alt="Retrato aproximado em look preto com expressão serena" loading="lazy" width="150" height="150">
+              <figcaption class="slide-overlay">
+                <h3>Mais um ciclo lindo</h3>
+                <p>Que esta nova fase venha recheada de conquistas, momentos felizes e lembranças boas para guardar com carinho.</p>
+              </figcaption>
+            </figure>
+
+            <figure class="slide">
+              <img src="./maju3.jpg" alt="Selfie no espelho com celular rosa e look preto" loading="lazy" width="1080" height="1350">
+              <figcaption class="slide-overlay">
+                <h3>Feliz aniversário!</h3>
+                <p>SEU NIVER o destaque é todo seu, celebrando a sua vida, sua amizade e tudo de incrível que você leva para as pessoas ao seu redor.</p>
+              </figcaption>
+            </figure>
+          </div>
+          <button class="nav-btn next" aria-label="Próxima imagem">❯</button>
+          <div class="dots" id="dots"></div>
+        </div>
+      </div>
+
+      <p class="love-line">Feito com carinho para comemorar esse dia especial (FOI MAL TO ENTREGANDO ATRASADO DKSAKDSK) o seu aniversário 🎂</p>
+    </section>
+
+    <section class="footer-love">
+      <h2>Uma homenagem simplesmnete horrorosa de aniversário</h2>
+      <p>
+        happy birthday coisa ruim
+      </p>
+      <div class="signature">Feliz aniversáRIOOOOO 🎀🎀🎀🎀🎀🎀</div>
+    </section>
