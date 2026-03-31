@@ -552,3 +552,70 @@
       </p>
       <div class="signature">Feliz aniversáRIOOOOO 🎀🎀🎀🎀🎀🎀</div>
     </section>
+
+    <script>
+  const slides = document.getElementById('slides');
+  const slideItems = Array.from(document.querySelectorAll('.slide'));
+  const dotsContainer = document.getElementById('dots');
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+  let current = 0;
+  let autoPlay;
+
+  dotsContainer.innerHTML = '';
+
+  slideItems.forEach((_, index) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (index === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Ir para imagem ${index + 1}`);
+    dot.addEventListener('click', () => {
+      current = index;
+      updateCarousel();
+      restartAutoPlay();
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  function getDots() {
+    return Array.from(document.querySelectorAll('.dot'));
+  }
+
+  function updateCarousel() {
+    slides.style.transform = `translateX(-${current * 100}%)`;
+    getDots().forEach((dot, index) => {
+      dot.classList.toggle('active', index === current);
+    });
+  }
+
+  function nextSlide() {
+    current = (current + 1) % slideItems.length;
+    updateCarousel();
+  }
+
+  function prevSlide() {
+    current = (current - 1 + slideItems.length) % slideItems.length;
+    updateCarousel();
+  }
+
+  function startAutoPlay() {
+    clearInterval(autoPlay);
+    autoPlay = setInterval(nextSlide, 4200);
+  }
+
+  function restartAutoPlay() {
+    startAutoPlay();
+  }
+
+  nextBtn.addEventListener('click', () => {
+    nextSlide();
+    restartAutoPlay();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    prevSlide();
+    restartAutoPlay();
+  });
+
+  updateCarousel();
+  startAutoPlay();
+</script>
